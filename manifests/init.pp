@@ -52,11 +52,11 @@ class sssd (
   Enum['present', 'absent'] $ensure = 'present',
   Hash $config = {
     'sssd'               => {
-      'domains'             => $::domain,
+      'domains'             => $::facts['domain'],
       'config_file_version' => 2,
       'services'            => ['nss', 'pam'],
     },
-    "domain/${::domain}" => {
+    "domain/${::facts['domain']}" => {
       'access_provider'    => 'simple',
       'simple_allow_users' => ['root'],
     },
@@ -197,7 +197,7 @@ class sssd (
     content => template($config_template),
   }
 
-  case $::osfamily {
+  case $::facts['os']['family'] {
     'RedHat': {
       if ($::facts['os']['name'] == 'Fedora' and versioncmp($::facts['os']['release']['major'], '28') >= 0) or
       ( $::facts['os']['family'] == 'RedHat' and versioncmp($::facts['os']['release']['major'], '8') >= 0) {
