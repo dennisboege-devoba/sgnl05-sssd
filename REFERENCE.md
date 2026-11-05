@@ -26,26 +26,26 @@ include ::sssd
 
 The following parameters are available in the `sssd` class:
 
-* [`ensure`](#ensure)
-* [`config`](#config)
-* [`sssd_package`](#sssd_package)
-* [`sssd_package_ensure`](#sssd_package_ensure)
-* [`sssd_service`](#sssd_service)
-* [`extra_packages`](#extra_packages)
-* [`extra_packages_ensure`](#extra_packages_ensure)
-* [`config_file`](#config_file)
-* [`config_template`](#config_template)
-* [`mkhomedir`](#mkhomedir)
-* [`manage_oddjobd`](#manage_oddjobd)
-* [`service_ensure`](#service_ensure)
-* [`service_dependencies`](#service_dependencies)
-* [`enable_mkhomedir_flags`](#enable_mkhomedir_flags)
-* [`disable_mkhomedir_flags`](#disable_mkhomedir_flags)
-* [`pam_mkhomedir_umask`](#pam_mkhomedir_umask)
-* [`ensure_absent_flags`](#ensure_absent_flags)
-* [`authselect_profile`](#authselect_profile)
+* [`ensure`](#-sssd--ensure)
+* [`config`](#-sssd--config)
+* [`sssd_package`](#-sssd--sssd_package)
+* [`sssd_package_ensure`](#-sssd--sssd_package_ensure)
+* [`sssd_service`](#-sssd--sssd_service)
+* [`extra_packages`](#-sssd--extra_packages)
+* [`extra_packages_ensure`](#-sssd--extra_packages_ensure)
+* [`config_file`](#-sssd--config_file)
+* [`config_template`](#-sssd--config_template)
+* [`mkhomedir`](#-sssd--mkhomedir)
+* [`manage_oddjobd`](#-sssd--manage_oddjobd)
+* [`service_ensure`](#-sssd--service_ensure)
+* [`service_dependencies`](#-sssd--service_dependencies)
+* [`enable_mkhomedir_flags`](#-sssd--enable_mkhomedir_flags)
+* [`disable_mkhomedir_flags`](#-sssd--disable_mkhomedir_flags)
+* [`pam_mkhomedir_umask`](#-sssd--pam_mkhomedir_umask)
+* [`ensure_absent_flags`](#-sssd--ensure_absent_flags)
+* [`authselect_profile`](#-sssd--authselect_profile)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-sssd--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -53,25 +53,29 @@ Ensure if the sssd config file is to be present or absent.
 
 Default value: `'present'`
 
-##### <a name="config"></a>`config`
+##### <a name="-sssd--config"></a>`config`
 
 Data type: `Hash`
 
 Hash containing entire SSSD config.
 
-Default value: `{
+Default value:
+
+```puppet
+{
     'sssd'               => {
-      'domains'             => $::domain,
+      'domains'             => $::facts['domain'],
       'config_file_version' => 2,
       'services'            => ['nss', 'pam'],
     },
-    "domain/${::domain}" => {
+    "domain/${::facts['domain']}" => {
       'access_provider'    => 'simple',
       'simple_allow_users' => ['root'],
     },
-  }`
+  }
+```
 
-##### <a name="sssd_package"></a>`sssd_package`
+##### <a name="-sssd--sssd_package"></a>`sssd_package`
 
 Data type: `String`
 
@@ -80,7 +84,7 @@ is not supported or you know what you're doing.
 
 Default value: `'sssd'`
 
-##### <a name="sssd_package_ensure"></a>`sssd_package_ensure`
+##### <a name="-sssd--sssd_package_ensure"></a>`sssd_package_ensure`
 
 Data type: `String`
 
@@ -88,7 +92,7 @@ Sets the ensure parameter of the sssd package.
 
 Default value: `'present'`
 
-##### <a name="sssd_service"></a>`sssd_service`
+##### <a name="-sssd--sssd_service"></a>`sssd_service`
 
 Data type: `String`
 
@@ -96,7 +100,7 @@ Name of the sssd service.
 
 Default value: `'sssd'`
 
-##### <a name="extra_packages"></a>`extra_packages`
+##### <a name="-sssd--extra_packages"></a>`extra_packages`
 
 Data type: `Array`
 
@@ -104,7 +108,7 @@ Array of extra packages.
 
 Default value: `[]`
 
-##### <a name="extra_packages_ensure"></a>`extra_packages_ensure`
+##### <a name="-sssd--extra_packages_ensure"></a>`extra_packages_ensure`
 
 Data type: `String`
 
@@ -112,7 +116,7 @@ Value of ensure parameter for extra packages.
 
 Default value: `'present'`
 
-##### <a name="config_file"></a>`config_file`
+##### <a name="-sssd--config_file"></a>`config_file`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -120,7 +124,7 @@ Path to the sssd config file.
 
 Default value: `'/etc/sssd/sssd.conf'`
 
-##### <a name="config_template"></a>`config_template`
+##### <a name="-sssd--config_template"></a>`config_template`
 
 Data type: `String`
 
@@ -128,24 +132,24 @@ Defines the template used for the sssd config.
 
 Default value: `'sssd/sssd.conf.erb'`
 
-##### <a name="mkhomedir"></a>`mkhomedir`
+##### <a name="-sssd--mkhomedir"></a>`mkhomedir`
 
 Data type: `Boolean`
 
 Whether or not to manage auto-creation of home directories on
 user login.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="manage_oddjobd"></a>`manage_oddjobd`
+##### <a name="-sssd--manage_oddjobd"></a>`manage_oddjobd`
 
 Data type: `Boolean`
 
 Whether or not to manage the oddjobd service.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-sssd--service_ensure"></a>`service_ensure`
 
 Data type: `Variant[Boolean, Enum['running', 'stopped']]`
 
@@ -153,7 +157,7 @@ Ensure if services should be running/stopped.
 
 Default value: `'running'`
 
-##### <a name="service_dependencies"></a>`service_dependencies`
+##### <a name="-sssd--service_dependencies"></a>`service_dependencies`
 
 Data type: `Array`
 
@@ -163,33 +167,41 @@ service to prevent `Error: Could not start Service[oddjobd]`.
 
 Default value: `[]`
 
-##### <a name="enable_mkhomedir_flags"></a>`enable_mkhomedir_flags`
+##### <a name="-sssd--enable_mkhomedir_flags"></a>`enable_mkhomedir_flags`
 
 Data type: `Array`
 
 Array of flags to use with authconfig
 or authselect to enable auto-creation of home directories.
 
-Default value: `[
+Default value:
+
+```puppet
+[
     '--enablesssd',
     '--enablesssdauth',
     '--enablemkhomedir',
-  ]`
+  ]
+```
 
-##### <a name="disable_mkhomedir_flags"></a>`disable_mkhomedir_flags`
+##### <a name="-sssd--disable_mkhomedir_flags"></a>`disable_mkhomedir_flags`
 
 Data type: `Array`
 
 Array of flags to use with authconfig
 or authselect to disable auto-creation of home directories.
 
-Default value: `[
+Default value:
+
+```puppet
+[
     '--enablesssd',
     '--enablesssdauth',
     '--disablemkhomedir',
-  ]`
+  ]
+```
 
-##### <a name="pam_mkhomedir_umask"></a>`pam_mkhomedir_umask`
+##### <a name="-sssd--pam_mkhomedir_umask"></a>`pam_mkhomedir_umask`
 
 Data type: `String`
 
@@ -197,23 +209,26 @@ Umask to set for pam_mkhomedir (oddjobd-mkhomedir on RedHat uses UMASK from logi
 
 Default value: `'0022'`
 
-##### <a name="ensure_absent_flags"></a>`ensure_absent_flags`
+##### <a name="-sssd--ensure_absent_flags"></a>`ensure_absent_flags`
 
 Data type: `Array`
 
 Array of flags to use with authconfig when service
 is disabled.
 
-Default value: `[
+Default value:
+
+```puppet
+[
     '--disablesssd',
     '--disablesssdauth',
-  ]`
+  ]
+```
 
-##### <a name="authselect_profile"></a>`authselect_profile`
+##### <a name="-sssd--authselect_profile"></a>`authselect_profile`
 
 Data type: `String`
 
 Name of authselect profile to use
 
 Default value: `'sssd'`
-

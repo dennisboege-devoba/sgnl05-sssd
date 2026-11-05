@@ -89,7 +89,6 @@ class sssd (
   ],
   String $authselect_profile='sssd',
 ) {
-
   # Warn on unsupported platforms
   if ($::facts['os']['family'] == 'RedHat') {
     if ($::facts['os']['name'] == 'Amazon') {
@@ -272,7 +271,6 @@ class sssd (
       $pamconfig_check_cmd  = '/usr/sbin/pam-config -q --sss | grep session:'
 
       if $mkhomedir {
-
         exec { 'pam-config -a --mkhomedir':
           path   => '/bin:/usr/bin:/sbin:/usr/sbin',
           unless => $pamconfig_mkhomedir_check_cmd,
@@ -288,7 +286,7 @@ class sssd (
         unless => $pamconfig_check_cmd,
       }
     }
-    default: { }
+    default: {}
   }
 
   $service_ensure_real = $sssd::ensure ? {
