@@ -12,7 +12,7 @@ RSpec.configure do |config|
   end
   config.default_facts = {
     environment: 'rp_env',
-    domain: 'example.com',
+    networking: { 'domain' => 'example.com' },
     osfamily: 'RedHat',
     operatingsystem: 'RedHat',
     operatingsystemmajrelease: '7',
