@@ -1,4 +1,5 @@
 ### Unreleased
+  * Require OpenVox 8, support Debian 12/13, Ubuntu 22.04/24.04, RHEL 8/9 and SLES 15
   * Use authselect on RHEL 9 (missing Hiera data made it call authselect with authconfig flags)
 
 ### 2020-01-28 (3.1.0)
