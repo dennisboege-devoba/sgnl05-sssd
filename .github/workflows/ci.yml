@@ -26,3 +26,26 @@ jobs:
           bundler-cache: true
       - name: Run static and unit tests
         run: bundle exec rake test rubocop
+
+  integration:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: ['debian-12', 'debian-13', 'ubuntu-2404', 'rocky-9']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      - name: Start LDAP server
+        run: |
+          docker network create kitchen
+          docker build -t sssd-test-ldap test/ldap
+          docker run -d --name ldap --network kitchen -v ldap-ca:/ca sssd-test-ldap
+      - name: Run integration tests
+        run: bundle exec kitchen test default-${{ matrix.platform }} --destroy=always
+        timeout-minutes: 30

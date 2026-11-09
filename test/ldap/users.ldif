@@ -1,0 +1,25 @@
+dn: ou=people,dc=example,dc=test
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,dc=example,dc=test
+objectClass: organizationalUnit
+ou: groups
+
+dn: uid=testuser,ou=people,dc=example,dc=test
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: testuser
+cn: Test User
+sn: User
+uidNumber: 10001
+gidNumber: 10001
+homeDirectory: /home/testuser
+loginShell: /bin/bash
+userPassword: @PASSWORD@
+
+dn: cn=testgroup,ou=groups,dc=example,dc=test
+objectClass: posixGroup
+cn: testgroup
+gidNumber: 10001
+memberUid: testuser

@@ -118,41 +118,48 @@ Or you can use a relevant [module][1] for automation.
 
 ## Limitations
 
-This module tracks the latest release of the latest two major releases,
-currently Puppet versions 5 and 6.
+This module requires OpenVox 8.
 
 ### Tested on
 
-* Amazon Linux 2
-* Debian 8
-* Debian 9
-* EL 6
-* EL 7
-* EL 8
-* Fedora 30
-* Fedora 31
-* Fedora 32
-* Fedora 33
-* Gentoo 4
-* Suse 11
-* Suse 12
-* Suse 15
-* Ubuntu 14.04
-* Ubuntu 16.04
-* Ubuntu 18.04
+* Debian 12 and 13
+* EL 8 and 9
+* SLES 15
+* Ubuntu 22.04 and 24.04
+
+The integration tests log in as an LDAP user on Debian 12 and 13, Ubuntu 24.04
+and Rocky Linux 9.
 
 ### May work with
 
 These platforms are end of life (EOL) and once worked with the module
 and probably still do. We keep the data for them and if you use them a
-warning will appear instead of a failure. In order to speed up testing,
-we no longer run tests for EOL platforms.
+warning will appear instead of a failure.
 
-* Debian 7
-* EL 5
-* Fedora 26
-* Fedora 27
-* Gentoo 3
+* Amazon Linux 2
+* Debian 7 to 11
+* EL 5 to 7
+* Fedora 26 to 33
+* Gentoo 3 and 4
+* Suse 11 and 12
+* Ubuntu 14.04 to 20.04
+
+## Development
+
+```sh
+bundle install
+bundle exec rake test rubocop
+```
+
+The integration tests apply the module with test-kitchen in systemd containers
+against the LDAP server from `test/ldap`:
+
+```sh
+docker network create kitchen
+docker build -t sssd-test-ldap test/ldap
+docker run -d --name ldap --network kitchen -v ldap-ca:/ca sssd-test-ldap
+bundle exec kitchen test
+```
 
 ## Versioning
 The v1 series of this module will support both Puppet v3 and v4. The v2

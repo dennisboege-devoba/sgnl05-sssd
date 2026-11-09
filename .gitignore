@@ -39,3 +39,7 @@ log/
 
 # Emacs
 *~
+.kitchen
+/test/integration/**/.librarian
+/test/integration/**/.tmp
+/test/integration/*/puppet/Puppetfile.lock
