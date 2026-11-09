@@ -1,4 +1,5 @@
 ### Unreleased
+  * SLES 15 no longer installs sssd-32bit, add it to sssd::extra_packages for 32-bit applications
   * Require OpenVox 8, support Debian 12/13, Ubuntu 22.04/24.04, RHEL 8/9 and SLES 15
   * Use authselect on RHEL 9 (missing Hiera data made it call authselect with authconfig flags)
 

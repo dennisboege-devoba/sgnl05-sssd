@@ -338,7 +338,6 @@ describe 'sssd' do
         sssd-krb5
         sssd-ad
         sssd-ipa
-        sssd-32bit
         sssd-tools
         sssd-ldap
       ],
@@ -549,7 +548,7 @@ describe 'sssd' do
 
         if v[:facts_hash][:osfamily] == 'Suse'
 
-          if v[:facts_hash][:os]['architecture'] == 'i386'
+          if v[:facts_hash][:os]['architecture'] == 'i386' || v[:facts_hash][:os]['release']['major'] == '15'
             it do
               is_expected.not_to contain_package('sssd-32bit').with_ensure('installed')
             end

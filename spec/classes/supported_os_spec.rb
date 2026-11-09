@@ -20,6 +20,8 @@ describe 'sssd' do
         it { is_expected.to contain_exec('pam-auth-update') }
       when 'Suse'
         it { is_expected.to contain_exec('pam-config -a --mkhomedir') }
+        it { is_expected.to contain_package('sssd-ldap') }
+        it { is_expected.not_to contain_package('sssd-32bit') }
       end
     end
   end
