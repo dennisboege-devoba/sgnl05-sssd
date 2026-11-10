@@ -127,8 +127,8 @@ This module requires OpenVox 8.
 * SLES 15
 * Ubuntu 22.04 and 24.04
 
-The integration tests log in as an LDAP user on Debian 12 and 13, Ubuntu 24.04
-and Rocky Linux 9.
+The integration tests log in as an LDAP user on Debian 12 and 13, Ubuntu 24.04,
+Rocky Linux 9 and SLES 15.
 
 ### May work with
 
@@ -160,6 +160,9 @@ docker build -t sssd-test-ldap test/ldap
 docker run -d --name ldap --network kitchen -v ldap-ca:/ca sssd-test-ldap
 bundle exec kitchen test
 ```
+
+OpenVox ships SLES packages for x86_64 only. On other hosts, enable amd64 emulation
+before running the SLES platform, e.g. `docker run --privileged --rm tonistiigi/binfmt --install amd64`.
 
 ## Versioning
 The v1 series of this module will support both Puppet v3 and v4. The v2

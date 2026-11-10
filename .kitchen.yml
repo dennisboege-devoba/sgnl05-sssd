@@ -55,6 +55,21 @@ platforms:
         - dnf install -y systemd ruby rubygem-bundler pamtester util-linux
         - systemctl mask tmp.mount
         - rpm -Uvh https://yum.voxpupuli.org/openvox8-release-el-9.noarch.rpm && dnf install -y openvox-agent
+  - name: "sles-15"
+    driver:
+      image: "registry.suse.com/bci/bci-init:15.7"
+      platform: "sles"
+      # OpenVox only ships x86_64 packages for SLES
+      docker_platform: "linux/amd64"
+      run_command: "/usr/lib/systemd/systemd"
+      provision_command:
+        - zypper install -y ruby ruby2.5-rubygem-bundler sssd-tools util-linux
+        - systemctl mask tmp.mount
+        # systemd-tmpfiles-setup fails in docker at the credentials step, so /run/sssd would be missing
+        - mkdir -p /etc/systemd/system/systemd-tmpfiles-setup.service.d
+        - printf '[Service]\nImportCredential=\n' > /etc/systemd/system/systemd-tmpfiles-setup.service.d/docker.conf
+        - rpm -Uvh https://yum.voxpupuli.org/openvox8-release-sles-15.noarch.rpm
+        - zypper --gpg-auto-import-keys install -y openvox-agent
 
 # without patterns kitchen-verifier-serverspec runs no specs at all and still passes
 verifier:

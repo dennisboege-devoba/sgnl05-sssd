@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ['debian-12', 'debian-13', 'ubuntu-2404', 'rocky-9']
+        platform: ['debian-12', 'debian-13', 'ubuntu-2404', 'rocky-9', 'sles-15']
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby
