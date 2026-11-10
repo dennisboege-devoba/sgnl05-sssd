@@ -291,6 +291,18 @@ class sssd (
         path   => '/bin:/usr/bin:/sbin:/usr/sbin',
         unless => $pamconfig_check_cmd,
       }
+
+      # SLES ships passwd/group as 'compat' only and pam-config does not touch nsswitch.
+      if $ensure == 'present' {
+        $sss_entry = '[[:space:]]sss([[:space:]]|\$)'
+        exec { 'nsswitch-sss':
+          command  => "sed -i -E \"/^(passwd|group):/{/${sss_entry}/!s/\\\$/ sss/}\" /etc/nsswitch.conf",
+          unless   => "test \$(grep -Ec \"^(passwd|group):.*${sss_entry}\" /etc/nsswitch.conf) -eq 2",
+          path     => '/bin:/usr/bin:/sbin:/usr/sbin',
+          provider => 'shell',
+          require  => Package[$sssd_package],
+        }
+      }
     }
     default: {}
   }

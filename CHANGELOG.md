@@ -1,4 +1,6 @@
 ### Unreleased
+  * Add sss to passwd and group in /etc/nsswitch.conf on SLES; the module does not
+      restart nscd, do that once where it runs
   * Add parameters `config_group` and `config_mode`. SLES 15 (root:sssd 0640) and
       Debian 13 (0640) now keep the permissions set by their sssd package, so sssd
       is no longer restarted on every run. SLES 15 requires the group sssd to exist.

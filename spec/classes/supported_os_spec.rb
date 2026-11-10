@@ -33,6 +33,7 @@ describe 'sssd' do
         it { is_expected.to contain_exec('pam-config -a --mkhomedir') }
         it { is_expected.to contain_package('sssd-ldap') }
         it { is_expected.not_to contain_package('sssd-32bit') }
+        it { is_expected.to contain_exec('nsswitch-sss').that_requires('Package[sssd]') }
       end
     end
   end
