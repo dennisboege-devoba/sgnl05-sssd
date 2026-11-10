@@ -35,6 +35,8 @@ The following parameters are available in the `sssd` class:
 * [`extra_packages_ensure`](#-sssd--extra_packages_ensure)
 * [`config_file`](#-sssd--config_file)
 * [`config_template`](#-sssd--config_template)
+* [`config_group`](#-sssd--config_group)
+* [`config_mode`](#-sssd--config_mode)
 * [`mkhomedir`](#-sssd--mkhomedir)
 * [`manage_oddjobd`](#-sssd--manage_oddjobd)
 * [`service_ensure`](#-sssd--service_ensure)
@@ -131,6 +133,22 @@ Data type: `String`
 Defines the template used for the sssd config.
 
 Default value: `'sssd/sssd.conf.erb'`
+
+##### <a name="-sssd--config_group"></a>`config_group`
+
+Data type: `String`
+
+Group owner of the sssd config file.
+
+Default value: `'root'`
+
+##### <a name="-sssd--config_mode"></a>`config_mode`
+
+Data type: `Stdlib::Filemode`
+
+File mode of the sssd config file.
+
+Default value: `'0600'`
 
 ##### <a name="-sssd--mkhomedir"></a>`mkhomedir`
 

@@ -1,4 +1,7 @@
 ### Unreleased
+  * Add parameters `config_group` and `config_mode`. SLES 15 (root:sssd 0640) and
+      Debian 13 (0640) now keep the permissions set by their sssd package, so sssd
+      is no longer restarted on every run. SLES 15 requires the group sssd to exist.
   * SLES 15 no longer installs sssd-32bit, add it to sssd::extra_packages for 32-bit applications
   * Require OpenVox 8, support Debian 12/13, Ubuntu 22.04/24.04, RHEL 8/9 and SLES 15
   * Use authselect on RHEL 9 (missing Hiera data made it call authselect with authconfig flags)

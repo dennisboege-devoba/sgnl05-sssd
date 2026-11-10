@@ -10,6 +10,17 @@ describe 'sssd' do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_service('sssd') }
 
+      # Match the ownership the sssd package itself applies, so the service
+      # restart on every run goes away.
+      case [os_facts[:os]['name'], os_facts[:os]['release']['major']]
+      when %w[SLES 15]
+        it { is_expected.to contain_file('sssd.conf').with(owner: 'root', group: 'sssd', mode: '0640') }
+      when %w[Debian 13]
+        it { is_expected.to contain_file('sssd.conf').with(owner: 'root', group: 'root', mode: '0640') }
+      else
+        it { is_expected.to contain_file('sssd.conf').with(owner: 'root', group: 'root', mode: '0600') }
+      end
+
       case os_facts[:os]['family']
       when 'RedHat'
         it { is_expected.to contain_package('authselect') }

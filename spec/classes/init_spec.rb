@@ -334,6 +334,8 @@ describe 'sssd' do
       },
     },
     'suse15' => {
+      config_group: 'sssd',
+      config_mode: '0640',
       extra_packages: %w[
         sssd-krb5
         sssd-ad
@@ -490,8 +492,8 @@ describe 'sssd' do
                                                           ensure: 'file',
                                                           path: '/etc/sssd/sssd.conf',
                                                           owner: 'root',
-                                                          group: 'root',
-                                                          mode: '0600',
+                                                          group: v[:config_group] || 'root',
+                                                          mode: v[:config_mode] || '0600',
                                                           content: %r{^# Managed by Puppet.\n\n\[sssd\]\ndomains = example.com\nconfig_file_version = 2\nservices = nss, pam\n\n\[domain/example.com\]\naccess_provider = simple\nsimple_allow_users = root\n},
                                                         })
         end

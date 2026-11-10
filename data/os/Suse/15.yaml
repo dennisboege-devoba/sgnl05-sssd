@@ -6,3 +6,5 @@ sssd::extra_packages:
   - 'sssd-ipa'
   - 'sssd-tools'
   - 'sssd-ldap'
+sssd::config_group: 'sssd'
+sssd::config_mode: '0640'

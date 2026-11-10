@@ -1,0 +1,3 @@
+---
+
+sssd::config_mode: '0640'
